@@ -687,20 +687,23 @@ def load_ml_model():
         # ID Google Drive untuk model.h5
         model_id = "1Tri1t4GTFA4btVuzZtCJtwgJGbmq1-vK"  # ← ganti dengan ID asli dari Google Drive
         model_file = "model.h5"
-        
-        # Path lokal untuk class_indices.json
-        class_indices_path = "class_indices.json"  # bisa sesuaikan path-nya jika perlu
+
+        # Tentukan lokasi folder app.py
+        BASE_DIR = Path(__file__).resolve().parent
+
+        # Path file class_indices.json
+        class_indices_path = BASE_DIR / "class_indices.json"
 
         # Unduh model jika belum ada
         if not os.path.exists(model_file):
             model_url = f"https://drive.google.com/uc?id={model_id}"
             gdown.download(model_url, model_file, quiet=False)
-
+        
         # Cek keberadaan class_indices.json
-        if not os.path.exists(class_indices_path):
-            st.error("File class_indices.json tidak ditemukan di direktori lokal.")
+        if not class_indices_path.exists():
+            st.error(f"File class_indices.json tidak ditemukan: {class_indices_path}")
             return None, None
-
+    
         # Load model dan class indices
         model = load_model(model_file)
         with open(class_indices_path, "r") as f:
