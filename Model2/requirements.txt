@@ -1,0 +1,8 @@
+
+streamlit
+tensorflow
+keras
+numpy
+Pillow
+streamlit-option-menu
+gdown
